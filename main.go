@@ -3,55 +3,57 @@ package main
 import (
 	"flag"
 	"fmt"
+
+	"github.com/Sindreln/funtemps/conv"
+	"github.com/Sindreln/funtemps/funfacts"
 )
 
 var fahr float64
 var out string
-var funfacts string
+var funfact string
 var t string
+var celsius float64
+var kelvin float64
 
 func init() {
 	flag.Float64Var(&fahr, "F", 0.0, "temperatur i grader fahrenheit")
 	flag.StringVar(&out, "out", "C", "beregne temperatur i C - celsius, F - farhenheit, K- Kelvin")
-	flag.StringVar(&funfacts, "funfacts", "", "\"fun-facts\" om sun - Solen, luna - Månen og terra - Jorden")
+	flag.StringVar(&funfact, "funfacts", "", "\"fun-facts\" om sun - Solen, luna - Månen og terra - Jorden")
 	flag.StringVar(&t, "t", "", "temperaturskala når funfacts skal vises")
 }
 
 func main() {
 	flag.Parse()
 
-	if isFlagPassed("F") && (isFlagPassed("out") || isFlagPassed("funfacts")) {
-		if out == "C" {
-			celsius := (fahr - 32) * 5 / 9
-			fmt.Printf("%.2f°F er %.2f°C\n", fahr, celsius)
-		} else if out == "K" {
-			kelvin := (fahr + 459.67) * 5 / 9
-			fmt.Printf("%.2f°F er %.2f K\n", fahr, kelvin)
-		} else if out == "F" {
-			celsius := (fahr - 32) * 5 / 9
-			fahrenheit := (celsius * 9 / 5) + 32
-			fmt.Printf("%.2f°C er %.2f°F\n", celsius, fahrenheit)
-		}
+	if isFlagPassed("F") && out == "C" {
+		celsius = conv.FahrenheitToCelsius(fahr)
+		fmt.Println(fahr, "F er", celsius, "C")
+	}
+	if isFlagPassed("C") && out == "F" {
+		fahr = conv.CelsiusToFahrenheit(celsius)
+		fmt.Println(celsius, "C er", fahr, "F")
+	}
+	if isFlagPassed("C") && out == "K" {
+		kelvin = conv.CelsiusToKelvin(celsius)
+		fmt.Println(celsius, "C er", fahr, "K")
+	}
+	if isFlagPassed("K") && out == "C" {
+		celsius = conv.KelvinToCelsius(kelvin)
+		fmt.Println(celsius, "K er", fahr, "C")
+	}
+	if isFlagPassed("K") && out == "F" {
+		fahr = conv.KelvinToFahrenheit(kelvin)
+		fmt.Println(celsius, "K er", fahr, "F")
+	}
+	if isFlagPassed("F") && out == "K" {
+		kelvin = conv.FahrenheitToKelvin(fahr)
+		fmt.Println(celsius, "F er", fahr, "K")
+
 	} else if isFlagPassed("funfacts") && isFlagPassed("t") && t == "C" {
-		switch funfacts {
-		case "sun":
-			fmt.Println("The Sun is over 4.5 billion years old.",
-				"The Sun's light reaches the Earth in eight minutes.",
-				"The Sun is made from Hydrogen and Helium.")
-		case "luna":
-			fmt.Println("The Moon always shows Earth the same face.",
-				"The Moon's surface is actually dark.",
-				"The Moon has quakes too.")
-		case "terra":
-			fmt.Println("Earth has never been perfectly round",
-				"Earth's gravity isn't uniform.",
-				"In the past, sea levels were very different.")
-		default:
-			fmt.Println("Ukjent argument for funfacts. Bruk sun, luna eller terra.")
+		facts := funfacts.GetFunFacts(funfact)
+		for i, fact := range facts {
+			fmt.Printf("%d: %s\n", i+1, fact)
 		}
-	} else {
-		fmt.Println("Feil i argumentene. Bruk -h for hjelp.")
-		flag.PrintDefaults()
 	}
 }
 
