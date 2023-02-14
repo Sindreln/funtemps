@@ -6,9 +6,9 @@ var Fahrenheit float64
 
 // Konverterer Farhenheit til Celsius
 func FahrenheitToCelsius(value float64) float64 {
-	Celsius = (Fahrenheit - 32) * (1.8)
+	Celsius = (Fahrenheit - 32) * 5 / 9
 
-	return (value - 32) * (1.8)
+	return (value - 32) * 5 / 9
 }
 
 func CelsiusToFahrenheit(value float64) float64 {
@@ -33,7 +33,7 @@ func KelvinToFahrenheit(value float64) float64 {
 	return (value-273.15)*(1.8) + 32
 }
 func FahrenheitToKelvin(value float64) float64 {
-	Kelvin = (Fahrenheit-32)*(1.8) + 273.15
+	Kelvin = (Fahrenheit-32)*5/9 + 273.15
 
-	return (value-32)*(1.8) + 273.15
+	return (value-32)*5/9 + 273.15
 }
