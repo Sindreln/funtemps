@@ -20,36 +20,52 @@ func init() {
 	flag.StringVar(&out, "out", "C", "beregne temperatur i C - celsius, F - farhenheit, K- Kelvin")
 	flag.StringVar(&funfact, "funfacts", "", "\"fun-facts\" om sun - Solen, luna - Månen og terra - Jorden")
 	flag.StringVar(&t, "t", "", "temperaturskala når funfacts skal vises")
+	flag.Float64Var(&kelvin, "K", 0.0, "temperatur i grader Kelvin")
+	flag.Float64Var(&celsius, "C", 0.0, "temperatur i grader Celsius")
 }
 
 func main() {
 	flag.Parse()
 
+	converted := false
+
 	if isFlagPassed("F") && out == "C" {
 		celsius = conv.FahrenheitToCelsius(fahr)
 		fmt.Println(fahr, "F er", celsius, "C")
+		converted = true
 	}
+
 	if isFlagPassed("C") && out == "F" {
 		fahr = conv.CelsiusToFahrenheit(celsius)
 		fmt.Println(celsius, "C er", fahr, "F")
+		converted = true
 	}
+
 	if isFlagPassed("C") && out == "K" {
 		kelvin = conv.CelsiusToKelvin(celsius)
-		fmt.Println(celsius, "C er", fahr, "K")
+		fmt.Println(celsius, "C er", kelvin, "K")
+		converted = true
 	}
+
 	if isFlagPassed("K") && out == "C" {
 		celsius = conv.KelvinToCelsius(kelvin)
-		fmt.Println(celsius, "K er", fahr, "C")
+		fmt.Println(kelvin, "K er", celsius, "C")
+		converted = true
 	}
+
 	if isFlagPassed("K") && out == "F" {
 		fahr = conv.KelvinToFahrenheit(kelvin)
-		fmt.Println(celsius, "K er", fahr, "F")
+		fmt.Println(kelvin, "K er", fahr, "F")
+		converted = true
 	}
+
 	if isFlagPassed("F") && out == "K" {
 		kelvin = conv.FahrenheitToKelvin(fahr)
-		fmt.Println(celsius, "F er", fahr, "K")
+		fmt.Println(fahr, "F er", kelvin, "K")
+		converted = true
+	}
 
-	} else if isFlagPassed("funfacts") && isFlagPassed("t") && t == "C" {
+	if !converted && isFlagPassed("funfacts") && isFlagPassed("t") && t == "C" {
 		facts := funfacts.GetFunFacts(funfact)
 		for i, fact := range facts {
 			fmt.Printf("%d: %s\n", i+1, fact)
