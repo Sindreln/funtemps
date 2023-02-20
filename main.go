@@ -31,37 +31,37 @@ func main() {
 
 	if isFlagPassed("F") && out == "C" {
 		celsius = conv.FahrenheitToCelsius(fahr)
-		fmt.Println(fahr, "F er", celsius, "C")
+		fmt.Printf("%.3f F er %.2f C\n", fahr, celsius)
 		converted = true
 	}
 
 	if isFlagPassed("C") && out == "F" {
 		fahr = conv.CelsiusToFahrenheit(celsius)
-		fmt.Println(celsius, "C er", fahr, "F")
+		fmt.Printf("%.2f C er %.3f F\n", celsius, fahr)
 		converted = true
 	}
 
 	if isFlagPassed("C") && out == "K" {
 		kelvin = conv.CelsiusToKelvin(celsius)
-		fmt.Println(celsius, "C er", kelvin, "K")
+		fmt.Printf("%.2f C er %.2f K\n", celsius, kelvin)
 		converted = true
 	}
 
 	if isFlagPassed("K") && out == "C" {
 		celsius = conv.KelvinToCelsius(kelvin)
-		fmt.Println(kelvin, "K er", celsius, "C")
+		fmt.Printf("%.2f K er %.2f C\n", kelvin, celsius)
 		converted = true
 	}
 
 	if isFlagPassed("K") && out == "F" {
 		fahr = conv.KelvinToFahrenheit(kelvin)
-		fmt.Println(kelvin, "K er", fahr, "F")
+		fmt.Printf("%.2f K er %.3f F\n", kelvin, fahr)
 		converted = true
 	}
 
 	if isFlagPassed("F") && out == "K" {
 		kelvin = conv.FahrenheitToKelvin(fahr)
-		fmt.Println(fahr, "F er", kelvin, "K")
+		fmt.Printf("%.3f F er %.2f K\n", fahr, kelvin)
 		converted = true
 	}
 
