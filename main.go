@@ -39,7 +39,7 @@ func main() {
 
 	if isFlagPassed("C") && out == "F" {
 		fahr = conv.CelsiusToFahrenheit(celsius)
-		fmt.Printf("%.2f C er %.3f F\n", celsius, fahr)
+		fmt.Printf("%.2f C er %.2f F\n", celsius, fahr)
 		converted = true
 	}
 
@@ -57,7 +57,7 @@ func main() {
 
 	if isFlagPassed("K") && out == "F" {
 		fahr = conv.KelvinToFahrenheit(kelvin)
-		fmt.Printf("%.2f K er %.3f F\n", kelvin, fahr)
+		fmt.Printf("%.2f K er %.2f F\n", kelvin, fahr)
 		converted = true
 	}
 
