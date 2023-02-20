@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/Sindreln/funtemps/conv"
 	"github.com/Sindreln/funtemps/funfacts"
@@ -81,4 +83,30 @@ func isFlagPassed(name string) bool {
 		}
 	})
 	return found
+}
+
+func formatFloat(val float64) string {
+	// Sjekk om verdien er et heltall
+	if val == float64(int(val)) {
+		return strconv.Itoa(int(val))
+	}
+
+	// Ellers formater med 2 desimaler
+	formatted := strconv.FormatFloat(val, 'f', 2, 64)
+
+	// Sjekk om verdien er et stort tall
+	if val >= 1000 {
+		// Finn posisjonen til desimaltegnet
+		decimalIndex := strings.Index(formatted, ".")
+		if decimalIndex == -1 {
+			decimalIndex = len(formatted)
+		}
+
+		// Legg til mellomrom mellom hver tredje siffer, start fra desimaltegnet og gå bakover
+		for i := decimalIndex - 3; i > 0; i -= 3 {
+			formatted = formatted[:i] + " " + formatted[i:]
+		}
+	}
+
+	return formatted
 }
